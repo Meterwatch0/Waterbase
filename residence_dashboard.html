@@ -356,6 +356,7 @@
     </div>
    <a class="logout-button" href="viewer.html">Bill rates</a>
    <a class="logout-button" id="messagesBtn">Messages</a>
+   <a href="analytics.html" class="logout-button" id="analyticsBtn">Analytics</a>
    <button class="logout-button" id="logoutBtn">Logout</button>
   </div>
 
@@ -800,6 +801,7 @@ if ("serviceWorker" in navigator) {
     });
 }
  
+    
       
       // Liters path
 const litersPath = sensorPath.replace("water_timer_counter/value", "water_timer_liters/value");
@@ -810,6 +812,35 @@ litersRef.on("value", snap => {
   const liters = Number(snap.val()) || 0;
   document.getElementById("litersReading").textContent = liters.toFixed(3);
 });
+      
+      // === MONTHLY DATA SAVE SYSTEM ===
+  const monthlyRef = db.ref(`monthly_usage/${currentUser}`);
+
+  // Convert consumption to liters (if your currentConsumption is in cubic meters)
+  function saveMonthlyData() {
+    const now = new Date();
+    const month = now.toLocaleString("default", { month: "long" }); // e.g. October
+    const year = now.getFullYear();
+    const litersUsed = currentConsumption * 1000; // 1 cubic meter = 1000 liters
+
+    const monthKey = `${year}_${month}`; // e.g. 2025_October
+
+    // Save/update Firebase record for this month
+    monthlyRef.child(monthKey).set({
+      month: month,
+      year: year,
+      consumption_m3: currentConsumption,
+      consumption_liters: litersUsed,
+      updatedAt: Date.now()
+    });
+  }
+
+  // Whenever bill updates (so reading changes), also save data
+  db.ref(sensorPath).on("value", snap => {
+    currentConsumption = Number(snap.val()) || 0;
+    updateBill();
+    saveMonthlyData(); // Save automatically
+  });
 
   </script>
 </body>
