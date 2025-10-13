@@ -22,13 +22,11 @@ body {
   align-items:center;
   padding:2rem;
   min-height:100vh;
-  transition: all 0.3s ease;
 }
 
 h1 {
   color:#60a5fa;
   margin-bottom:1.5rem;
-  text-align:center;
 }
 
 canvas {
@@ -36,8 +34,8 @@ canvas {
   border-radius:1rem;
   box-shadow:0 6px 18px rgba(0,0,0,0.5);
   padding:1rem;
-  width:100%;
   max-width:800px;
+  width:100%;
   margin-bottom:2rem;
 }
 
@@ -103,63 +101,6 @@ canvas {
   transform: translateX(5px);
   background: rgba(52,211,153,0.2);
 }
-
-/* ===========================
-   📱 MOBILE RESPONSIVE DESIGN
-   =========================== */
-@media (max-width: 768px) {
-  body {
-    padding: 1rem;
-  }
-
-  h1 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-
-  canvas {
-    padding: 0.5rem;
-    max-width: 100%;
-    margin-bottom: 1.5rem;
-  }
-
-  .back-btn, .button-tips {
-    width: 100%;
-    font-size: 0.95rem;
-    padding: 0.8rem;
-    border-radius: 10px;
-  }
-
-  .tips-container-wrapper {
-    padding: 1rem;
-  }
-
-  .tip {
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-}
-
-/* ===========================
-   💻 LARGE SCREEN DESIGN
-   =========================== */
-@media (min-width: 1200px) {
-  body {
-    padding: 3rem 6rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .tips-container-wrapper {
-    padding: 2rem 3rem;
-  }
-
-  canvas {
-    max-width: 900px;
-  }
-}
 </style>
 </head>
 <body>
@@ -217,8 +158,6 @@ function renderChart(labels, data) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
-      aspectRatio: 1.5,
       scales: {
         y: { beginAtZero: true, title:{ display:true, text:"Liters" } },
         x: { title:{ display:true, text:"Month" } }
